@@ -1,30 +1,68 @@
-# lumeeo-technical-test
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Technical test
+## Available Scripts
 
+In the project directory, you can run:
 
+### `npm start`
 
-Test 1: Crawling
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-Sur le site https://www.efficity.com/consultants-immobilier/
-�- Faire un script qui navigue sur chacun des liens amenant au profil d’un agent immobilier https://www.efficity.com/rinchauspe/
+### `npm test`
 
-⁃Récupérer le nom, prénom, le numéro de téléphone et l’email et l’insérer dans un CSV 
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run build`
 
-Test 2: React - Redux
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-You can work more or less time on if you want on it but I don’t want you to spend too much unpaid time on this.��Using create react app.
-Create a react app SPA, add redux and redux-thunk.�
-Using the crypto compare api (https://min-api.cryptocompare.com/documentation?key=Toplists&cat=TopTotalVolumeEndpointFull)
-https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-⁃Fetch data from the API
-⁃Put it in the redux state.
-⁃Using ant.design library, put this data in a table. Try to present it like it is shown on crypto compare main page https://www.cryptocompare.com/
-⁃Add a refresh button to refresh data on demand.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Bonus: show off your CSS and responsive skills !
+### `npm run eject`
 
-Put the code on a GitHub repository and send me the link when finished 🙂
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
