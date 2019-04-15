@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+
+import Row from "../Row";
+
+import { Table, Divider, Tag } from 'antd';
+
+const { Column, ColumnGroup } = Table;
 
 class Table extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currencies: []
-    };
-  }
-
-  componentDidMount() {
+  /*   componentDidMount() {
     this.getData();
-  }
+  } */
 
-  getData = () => {
+  /*   getData = () => {
     axios
     .get(
       "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
@@ -25,30 +24,52 @@ class Table extends Component {
       console.log(this.state.currencies);
     })
     .catch(error => console.log(error));
-  }
+  } */
 
   render() {
-    const { currencies } = this.state;
+    const { currencies } = this.props;
     const currenciesList = currencies.length ? (
-      currencies.map(currency => {
+      currencies.map((currency, index) => {
         return (
-          <div key={currency.CoinInfo.Id}>
-            <h2>{currency.CoinInfo.FullName}</h2>
-            <h3>Price: {currency.DISPLAY.USD.PRICE}</h3>
-            <h4>Last Transaction ID: {currency.DISPLAY.USD.LASTTRADEID}</h4>
-          </div>
-        )
+          <Row
+            key={currency.CoinInfo.Id}
+            data-index={index + 1}
+            props={currency}
+          />
+        );
       })
     ) : (
-    <h1>Loading ...</h1>
+      <h1 className="loading">Loading ...</h1>
     );
     return (
       <>
-      <button onClick={this.getData} type="button">Refresh</button>
-        {currenciesList}
+        <button onClick={this.getData} type="button">
+          Refresh
+        </button>
+        <table>
+          <thead>
+            <tr className="table100-head">
+              <th className="column1">#</th>
+              <th className="column2">Coin</th>
+              <th className="column3">Price</th>
+              <th className="column4">Direct Vol. 24H</th>
+              <th className="column5">Total Vol. 24H</th>
+              <th className="column6">Mkt. Cap.</th>
+              <th className="column7">7d Chart (USD)</th>
+              <th className="column8">Chg. 24H</th>
+            </tr>
+          </thead>
+          <tbody>{currenciesList}</tbody>
+        </table>
       </>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = state => {
+  return {
+    currencies: state.currencies
+  };
+};
+
+export default connect(mapStateToProps)(Table);
