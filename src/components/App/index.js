@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "antd/dist/antd.css";
-import { Table, Button } from "antd";
+import { Table, Button, Avatar, Tag } from "antd";
 
 import { fetchCoins } from "../../actions/coinActions";
 
@@ -15,6 +15,7 @@ class App extends Component {
   }
 
   start = () => {
+    this.props.fetchCoins();
     this.setState({ loading: true });
     setTimeout(() => {
       this.setState({
@@ -27,20 +28,26 @@ class App extends Component {
     console.log(this.props);
     const { currencies } = this.props;
     const { loading } = this.state;
+    const baseUrl = "https://www.cryptocompare.com";
 
     const data = [];
     currencies.forEach((currency, index) => {
       data.push({
         key: currency.CoinInfo.Id,
+        link: `${baseUrl}${currency.CoinInfo.Url}`,
         index: index + 1,
-        coin: currency.CoinInfo.FullName + " " + currency.CoinInfo.Name,
+        coin: {
+          fullname: currency.CoinInfo.FullName,
+          name: currency.CoinInfo.Name,
+          icon: `${baseUrl}${currency.CoinInfo.ImageUrl}`
+        },
         price: currency.DISPLAY.USD.PRICE,
         directVol: currency.DISPLAY.USD.VOLUME24HOURTO,
-        totalVol: currency.DISPLAY.USD.VOLUME24HOUR,
+        totalVol: currency.DISPLAY.USD.TOTALVOLUME24HTO,
         mktCap: currency.DISPLAY.USD.MKTCAP,
         sevenDayChart: `https://images.cryptocompare.com/sparkchart/${
           currency.CoinInfo.Name
-        }/USD/latest.png?ts=1555335600`,
+        }/USD/latest.png?ts=1555401600`,
         chg24H: currency.DISPLAY.USD.CHANGEPCT24HOUR
       });
     });
@@ -54,12 +61,22 @@ class App extends Component {
       {
         title: "Coin",
         dataIndex: "coin",
-        key: "coin"
+        key: "coin",
+        render: coin => (
+          <div className="display-icon">
+            <Avatar src={coin.icon} />
+            <div className="display-names">
+              <div>{coin.fullname}</div>
+              <div>{coin.name}</div>
+            </div>
+          </div>
+        )
       },
       {
         title: "Price",
         dataIndex: "price",
-        key: "price"
+        key: "price",
+        render: price => <Tag>{price}</Tag>
       },
       {
         title: "Direct Vol. 24H",
@@ -80,21 +97,35 @@ class App extends Component {
         title: "7d Chart (USD)",
         dataIndex: "sevenDayChart",
         key: "sevenDayChart",
-        render: () => <img src={`sevenDayChart`} alt="chart" />
+        render: sevenDayChart => <img src={sevenDayChart} alt="chart" />
       },
       {
         title: "Chg. 24H",
         dataIndex: "chg24H",
-        key: "chg24H"
+        key: "chg24H",
+        render: chg24H => (
+          <Tag color={chg24H > 0 ? "green" : "red"}>{chg24H}%</Tag>
+        )
       }
     ];
 
     return (
       <>
-        <Button type="primary" onClick={this.start} loading={loading}>
+        <Button type="primary" onClick={this.start} loading={loading} block>
           Reload
         </Button>
-        <Table dataSource={data} columns={columns} />
+        <Table
+          dataSource={data}
+          columns={columns}
+          pagination={false}
+          onRow={record => {
+            return {
+              onClick: () => {
+                window.location = record.link;
+              }
+            };
+          }}
+        />
       </>
     );
   }

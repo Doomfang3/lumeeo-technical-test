@@ -1,0 +1,13 @@
+.ant-tag {
+  text-align: center;
+  width: 100%;
+}
+
+.display-icon {
+  display: flex;
+}
+
+.display-name {
+  display: flex;
+  flex-direction: column;
+}
