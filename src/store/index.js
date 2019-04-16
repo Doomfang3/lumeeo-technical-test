@@ -1,29 +1,16 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import axios from "axios";
 
-import rootReducer from "../reducers/rootReducer";
+import rootReducer from "../reducers";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const initialState = {};
 
-export function fetchArticleDetails() {
-  return function(dispatch) {
-    return axios
-      .get(
-        "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
-      )
-      .then(({ data }) => {
-        dispatch(setCurrencies({ currencies: data.Data }));
-      })
-      .catch(error => console.log(error));
-  };
-}
+const middleware = [thunk];
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  applyMiddleware(...middleware)
+);
 
 export default store;
-
-/* axios
-      .get(
-        "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
-      )
-      .then(resp => (newState = { ...newState, currencies: resp.data.Data }))
-      .catch(error => console.log(error)); */

@@ -3,19 +3,18 @@ import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import { Table, Button } from "antd";
 
-import { getData } from "../../actions/dataActions";
+import { fetchCoins } from "../../actions/coinActions";
 
 class App extends Component {
   state = {
     loading: false
   };
 
-  componentDidMount() {
-    this.props.getData();
+  componentWillMount() {
+    this.props.fetchCoins();
   }
 
   start = () => {
-    this.props.getData();
     this.setState({ loading: true });
     setTimeout(() => {
       this.setState({
@@ -25,7 +24,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     const { currencies } = this.props;
     const { loading } = this.state;
 
@@ -101,15 +100,11 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({ currencies: state.currencies });
-
-const mapDispatchToProps = dispatch => ({
-  getData: () => {
-    dispatch(getData());
-  }
+const mapStateToProps = state => ({
+  currencies: state.currencies.items
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchCoins }
 )(App);
