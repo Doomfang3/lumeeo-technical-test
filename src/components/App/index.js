@@ -3,25 +3,39 @@ import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import { Table, Button, Avatar, Tag } from "antd";
 
-import { fetchCoins } from "../../actions/coinActions";
+import { fetchCoins, fetchAllCoins } from "../../actions/coinActions";
 
 class App extends Component {
   state = {
-    loading: false
+    loading: false,
+    fetchingAll: false,
+    buttonStyle: { display: "initial" }
   };
 
   componentWillMount() {
     this.props.fetchCoins();
   }
 
-  start = () => {
-    this.props.fetchCoins();
+  refresh = () => {
+    this.state.fetchingAll
+      ? this.props.fetchAllCoins()
+      : this.props.fetchCoins();
     this.setState({ loading: true });
     setTimeout(() => {
       this.setState({
         loading: false
       });
     }, 1000);
+  };
+
+  displayAllCoins = () => {
+    this.props.fetchAllCoins();
+    this.setState({ fetchingAll: true });
+    setTimeout(() => {
+      this.setState({
+        buttonStyle: { display: "none" }
+      });
+    }, 2000);
   };
 
   render() {
@@ -111,7 +125,7 @@ class App extends Component {
 
     return (
       <>
-        <Button type="primary" onClick={this.start} loading={loading} block>
+        <Button type="primary" onClick={this.refresh} loading={loading} block>
           Reload
         </Button>
         <Table
@@ -126,6 +140,14 @@ class App extends Component {
             };
           }}
         />
+        <Button
+          type="primary"
+          onClick={this.displayAllCoins}
+          block
+          style={this.state.buttonStyle}
+        >
+          View All Coins
+        </Button>
       </>
     );
   }
@@ -137,5 +159,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchCoins }
+  { fetchCoins, fetchAllCoins }
 )(App);
